@@ -12,6 +12,8 @@ class ViewController: UIViewController {
 
     var flipCounter: Int = 0
     {
+        //property oberver: called every time this object's value is set
+        //need to read more on this
         didSet{
             flipCountLabel.text = "Flips: \(flipCounter)"
         }
@@ -22,6 +24,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
     var emojiChoices = ["🐛","🐸","🐞","🦐","🐝","🐜"]
     @IBOutlet var cardButtons: [UIButton]!
     @IBOutlet weak var flipCountLabel: UILabel!
@@ -36,7 +39,9 @@ class ViewController: UIViewController {
         flipCounter+=1
     }
     
-
+    //function to flip the card upon clicking button
+    //changes button background according to its flip state
+    //Green for face down cards and white for face up cards
     func flipCard (withEmoji emoji: String, on button: UIButton)
     {
         if button.currentTitle == emoji
