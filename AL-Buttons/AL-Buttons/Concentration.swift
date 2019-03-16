@@ -17,6 +17,7 @@ class Concentration
     var indexOfOnlyFaceUpCard: Int?
     //func <name>(<external name> <internal name>: <param type>) -> <return type>
     //model function to choose a card in the game
+    //used by the viewcontroller to pass the index of the chosen card
     func chooseCard(at index: Int)
     {
         //check if card is not matched
@@ -67,6 +68,7 @@ class Concentration
         }
         
         //TODO: shuffle cards
+        cards.shuffle()
     }
 }
 
