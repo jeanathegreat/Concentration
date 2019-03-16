@@ -34,13 +34,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    var emojiChoices = ["🐛","🐸","🐞","🦐","🐝","🐜"]
-    
     //action that connects to a model function game.chooseCard
     @IBAction func touchFirstCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.lastIndex(of: sender)
         {
-            flipCard(withEmoji: emojiChoices[cardNumber], on: sender)
             game.chooseCard(at: cardNumber)
             //since something might change in the game
             updateViewFromModel()
@@ -61,14 +58,22 @@ class ViewController: UIViewController {
             if card.isFaceUp
             {
                 //flip the up down if card was face up
-                button.setTitle("", for: .normal)
+                button.setTitle(emoji(for: card), for: .normal)
                 button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             }else{
                 //
-                button.setTitle(emoji, for: .normal)
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 0.3084011078, green: 0.5618229508, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+                button.setTitle("", for: .normal)
+                button.backgroundColor = card.isMatched ? #colorLiteral(red: 0.3084011078, green: 0.5618229508, blue: 0, alpha: 0) : #colorLiteral(red: 0.3084011078, green: 0.5618229508, blue: 0, alpha: 1)
             }
         }
+    }
+    
+    
+    var emojiChoices = ["🐛","🐸","🐞","🦐","🐝","🐜"]
+
+    func emoji(for card: Card) -> String
+    {
+        return "?"
     }
 }
 

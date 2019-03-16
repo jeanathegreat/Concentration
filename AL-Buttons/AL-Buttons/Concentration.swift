@@ -16,7 +16,13 @@ class Concentration
     //model function to choose a card in the game
     func chooseCard(at index: Int)
     {
-        
+        //just flip the card over
+        if cards[index].isFaceUp
+        {
+            cards[index].isFaceUp = false
+        }else{
+            cards[index].isFaceUp = true
+        }
     }
     
     init(numberOfPairsOfCards: Int)
