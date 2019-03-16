@@ -10,6 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    //lazy is a property given to a variable meaning it is not initialized
+    //yet until it has to be used
+    //this solves the problem of interdependency on variables that need
+    //to be initialized first before using the other
+    //the thing is this cannot use a property obeserver like didSet, etc.
+    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count+1)/2)
+    @IBOutlet var cardButtons: [UIButton]!
+    @IBOutlet weak var flipCountLabel: UILabel!
+    
     var flipCounter: Int = 0
     {
         //property oberver: called every time this object's value is set
@@ -26,31 +35,39 @@ class ViewController: UIViewController {
     }
     
     var emojiChoices = ["🐛","🐸","🐞","🦐","🐝","🐜"]
-    @IBOutlet var cardButtons: [UIButton]!
-    @IBOutlet weak var flipCountLabel: UILabel!
     
+    //action that connects to a model function game.chooseCard
     @IBAction func touchFirstCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.lastIndex(of: sender)
         {
             flipCard(withEmoji: emojiChoices[cardNumber], on: sender)
+            game.chooseCard(at: cardNumber)
+            //since something might change in the game
+            updateViewFromModel()
         }else{
             print("chosen card was not in cardbuttons")
         }
         flipCounter+=1
     }
     
-    //function to flip the card upon clicking button
-    //changes button background according to its flip state
-    //Green for face down cards and white for face up cards
-    func flipCard (withEmoji emoji: String, on button: UIButton)
+    func updateViewFromModel()
     {
-        if button.currentTitle == emoji
+        for index in cardButtons.indices
         {
-            button.setTitle("", for: .normal)
-            button.backgroundColor = #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1)
-        }else{
-            button.setTitle(emoji, for: .normal)
-            button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            //look for button at that index
+            let button = cardButtons[index]
+            //look for card in the cards array of the game model at that index
+            let card = game.cards[index]
+            if card.isFaceUp
+            {
+                //flip the up down if card was face up
+                button.setTitle("", for: .normal)
+                button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            }else{
+                //
+                button.setTitle(emoji, for: .normal)
+                button.backgroundColor = card.isMatched ? #colorLiteral(red: 0.3084011078, green: 0.5618229508, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
+            }
         }
     }
 }

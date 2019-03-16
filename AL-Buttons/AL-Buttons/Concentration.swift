@@ -12,6 +12,13 @@ class Concentration
 {
     var cards = [Card]()
     
+    //func <name>(<external name> <internal name>: <param type>) -> <return type>
+    //model function to choose a card in the game
+    func chooseCard(at index: Int)
+    {
+        
+    }
+    
     init(numberOfPairsOfCards: Int)
     {
         for _ in 0..<numberOfPairsOfCards
@@ -19,7 +26,11 @@ class Concentration
             let card = Card()
             cards += [card,card]
         }
+        
+        //TODO: shuffle cards
     }
 }
+
+
 
 
