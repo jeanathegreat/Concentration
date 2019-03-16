@@ -24,6 +24,9 @@ struct Card
         //Card.makeCardIdentifier += 1
         //no need to use "Card." since you are in a static function so
         //accessing static variables is allowed
+        
+        //QUESTION: what is the value of makeCardIdentifier every time a new type Card is instatiated???
+        //TODO: debug this part
         makeCardIdentifier+=1
         return makeCardIdentifier
     }

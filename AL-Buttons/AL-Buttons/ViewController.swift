@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     }
     
     //action that connects to a model function game.chooseCard
-    @IBAction func touchFirstCard(_ sender: UIButton) {
+    @IBAction func touchCard(_ sender: UIButton) {
         if let cardNumber = cardButtons.lastIndex(of: sender)
         {
             game.chooseCard(at: cardNumber)
@@ -69,11 +69,23 @@ class ViewController: UIViewController {
     }
     
     
-    var emojiChoices = ["🐛","🐸","🐞","🦐","🐝","🐜"]
-
+    var emojiChoices = ["🐛","🐸","🐞","🦐","🐝","🐜","🍭","🎃","🥗","🌮","🍕"]
+    var emojiDictionary = [Int:String]()
+    //optional way to declare it
+    //var emojiDictionary =
+    
     func emoji(for card: Card) -> String
     {
-        return "?"
+        //create emoji dictionary from array of emojiChoices AMD
+        //check if emojiChoices still has emojis in its array
+        if emojiDictionary[card.identifier] == nil, emojiChoices.count > 0 {
+            //generate random index from the number of strings in emojiChoices array
+            let randInt = Int(arc4random_uniform(UInt32(emojiChoices.count)))
+            emojiDictionary[card.identifier] = emojiChoices.remove(at: randInt)
+        }
+        
+        //return optional string but if nil return ">"
+        return emojiDictionary[card.identifier] ?? "?"
     }
 }
 
