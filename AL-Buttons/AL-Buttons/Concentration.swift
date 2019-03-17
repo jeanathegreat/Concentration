@@ -15,6 +15,37 @@ class Concentration
     var cards = [Card]()
     
     var indexOfOnlyFaceUpCard: Int?
+    {
+        get
+        {
+            //optional flag to check if an index has been found
+            //nil if index has not been found yet
+            //set if index has been found, set to the value of the index found
+            var indexFound: Int?
+            for index in cards.indices
+            {
+                if cards[index].isFaceUp
+                {
+                    if indexFound == nil{
+                        indexFound = index
+                    }else{
+                        return nil
+                    }
+                }
+            }
+            return indexFound
+        }
+        
+        //set(variable) where variable is the newvalue it was set
+        //default name of "variable" is newValue
+        set {
+            for index in cards.indices{
+                //expression on the right hand of equal sign evaluates to true if the index value during the loop iteration is equal to the value is it currently being set to
+                //thus setting the faceup state of the card in that index to true
+                cards[index].isFaceUp = (index == newValue)
+            }
+        }
+    }
     //func <name>(<external name> <internal name>: <param type>) -> <return type>
     //model function to choose a card in the game
     //used by the viewcontroller to pass the index of the chosen card
@@ -37,14 +68,7 @@ class Concentration
                 //default action is to flip up the card chosen at index
                 //optionalInt indexOfOnlyFaceUpCard is unset because now there are 2 face up cards
                 cards[index].isFaceUp = true
-                indexOfOnlyFaceUpCard = nil
             }else{
-                //either no card or 2 cards are face up
-                for flipDownIndex in cards.indices
-                {
-                    cards[flipDownIndex].isFaceUp = false
-                }
-                cards[index].isFaceUp = true
                 indexOfOnlyFaceUpCard = index
             }
         }
