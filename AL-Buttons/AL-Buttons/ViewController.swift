@@ -15,9 +15,18 @@ class ViewController: UIViewController {
     //this solves the problem of interdependency on variables that need
     //to be initialized first before using the other
     //the thing is this cannot use a property obeserver like didSet, etc.
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count+1)/2)
+    lazy var game = Concentration(numberOfPairsOfCards: numberofpairsofcards)
     @IBOutlet var cardButtons: [UIButton]!
     @IBOutlet weak var flipCountLabel: UILabel!
+    
+    //computed property that is read only (get only)
+    //can have no get{} if it is a ready only
+    //computed properties can be read only (gettable but not settable)
+    //computed properties can not be settable only
+    var numberofpairsofcards: Int
+    {
+      return (cardButtons.count+1)/2
+    }
     
     var flipCounter: Int = 0
     {
@@ -85,7 +94,7 @@ class ViewController: UIViewController {
             emojiDictionary[card.identifier] = emojiChoices.remove(at: randInt)
         }
         
-        //return optional string but if nil return ">"
+        //return optional string but if nil return "?"
         return emojiDictionary[card.identifier] ?? "?"
     }
 }
